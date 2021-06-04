@@ -1,0 +1,549 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>EBM</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-flex align-items-center fixed-top">
+
+    <div class="container d-flex">
+
+        <div class="contact-info mr-auto">
+            <i class="icofont-phone"></i> {{ data.phone_number }}
+            <span class="d-none d-lg-inline-block"><i
+                    class="icofont-clock-time icofont-rotate-180"></i> {{ data.active_hour }}</span>
+        </div>
+        <div class="languages">
+            <ul>
+                <li>Bn</li>
+                <li><a href="#">En</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+        <h1 class="logo mr-auto"><a href="{% url 'index' %}">ɛɮʍ</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#specials">Specials</a></li>
+                <li><a href="#teams">Teams</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <form id="my_form" action="{% url 'logout' %}" method="POST">
+                            {% csrf_token %}
+                            <a href="javascript:{}" onclick="document.getElementById('my_form').submit();">Logout</a>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                    {% endif %}
+
+                </li>
+                {#                <li class="book-a-event text-center"><a href="#book-a-table">Book Event</a></li>#}
+            </ul>
+        </nav><!-- .nav-menu -->
+
+    </div>
+    {% if user.is_authenticated and event_today %}
+
+                <div class="position-absolute pt-1" style="right: 20px;top: 100%">
+                    <a class="btn btn-primary" href="{% url 'user' %}">Today is a event of you. Click here to see</a>
+                </div>
+    {% endif %}
+
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section style="background: url('{{ data.first_banner.url }}') top center no-repeat;" id="hero"
+         class="d-flex align-items-center">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="container position-relative text-center text-lg-left" data-aos="zoom-in" data-aos-delay="100">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>{{ data.banner_title }}</h1>
+                <h2>{{ data.banner_subtitle }}</h2>
+
+                <div class="btns">
+                    <a href="#services" class="btn-menu animated fadeInUp scrollto">Services</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user' %}" class="btn-menu animated fadeInUp scrollto">{{ user }}</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn-menu animated fadeInUp scrollto">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about"
+             style="background: url('{{ data.description_banner.url }}') top center no-repeat;">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="about-img">
+                        <img src="{{ data.description_image.url }}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+                    <h3>EBM?</h3>
+                    <div class="pl-2">
+                        {{ data.description | safe }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End About Section -->
+
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Services</h2>
+                <p>Check Packages</p>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        {% for package in packages %}
+                            <li data-filter=".{{ package.name.split|join:"-" }}">{{ package.name|capfirst }}</li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                {% for package in packages %}
+                    {% for data in package.get_package.all %}
+                        <div class="col-lg-6 menu-item {{ package.name.split|join:"-" }}">
+                            <img src="{{ data.image.url }}" class="menu-img" alt="">
+                            <div class="menu-content">
+                                <a href="{% url 'checkout' data.id %}">{{ data.title |capfirst }} </a><span>TK {{ data.package_cost }}</span>
+                            </div>
+                            <div class="menu-Details">
+                                {{ data.subtitle }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                {% endfor %}
+            </div>
+    </section><!-- End services Section -->
+
+    <!-- ======= Specials Section ======= -->
+    <section id="specials" class="specials">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Specials</h2>
+                <p>Check Our Specials Packages</p>
+            </div>
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-3">
+                    <ul class="nav nav-tabs flex-column">
+                        {% for my_package in my_packages %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if forloop.first %} active show {% endif %} " data-toggle="tab"
+                                   href="#tab-{{ my_package.id }}">{{ my_package.title | capfirst }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-lg-9 mt-4 mt-lg-0">
+                    <div class="tab-content">
+                        {% for my_package in my_packages %}
+                            <div class="tab-pane  {% if forloop.first %}
+                        active show
+                        {% endif %} " id="tab-{{ my_package.id }}">
+                                <div class="row">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <h3>{{ my_package.title| capfirst }}</h3>
+                                        <p>
+                                            {{ my_package.description| safe }}
+                                        </p>
+                                        <p></p>
+                                    </div>
+                                    <div class="col-lg-4 text-center order-1 order-lg-2">
+                                        <img src="{{ my_package.image.url }}" alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+
+            </div>
+    </section><!-- End Specials Section -->
+
+    <!-- ======= Events Section ======= -->
+    <section id="events" class="events">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Events</h2>
+                <p>Organize Your Events</p>
+            </div>
+
+            <div class="owl-carousel events-carousel" data-aos="fade-up" data-aos-delay="100">
+                {% for event in events %}
+                    <div class="row event-item">
+                        <div class="col-lg-6">
+                            <img src="{{ event.image.url }}" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-lg-6 pt-4 pt-lg-0 content">
+                            <h3>{{ event.title }}</h3>
+                            <div class="price">
+                                <p><span>TK {{ event.price }}</span></p>
+                            </div>
+                            {{ event.description|safe }}
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section><!-- End Events Section -->
+
+
+    <!-- ======= Team Section ======= -->
+    <section id="teams" class="teams">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2> Team </h2>
+                <p>Our Team Members</p>
+            </div>
+
+            <div class="row">
+                {% for member in members %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                            <img src="{{ member.image.url }}" class="img-fluid" alt="">
+                            <div class="member-info">
+                                <div class="member-info-content">
+                                    <h4>{{ member.name|capfirst }}</h4>
+                                    <span>{{ member.role|capfirst }}</span>
+                                </div>
+                                <div class="social">
+                                    <a href="{{ member.twitter }}"><i class="icofont-twitter"></i></a>
+                                    <a href="{{ member.facebook }}"><i class="icofont-facebook"></i></a>
+                                    <a href="{{ member.instagram }}"><i class="icofont-instagram"></i></a>
+                                    <a href="{{ member.linkedin }}"><i class="icofont-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+    </section><!-- End Team Section -->
+
+    {##}
+    {#    <!-- ======= Book A Event Section ======= -->#}
+    {#    <section id="book-a-table" class="book-a-table">#}
+    {#        <div class="container" data-aos="fade-up">#}
+    {##}
+    {#            <div class="section-title">#}
+    {#                <h2>Reservation</h2>#}
+    {#                <p>Book a Event</p>#}
+    {#            </div>#}
+    {#            <form action="{% url 'index' %}" method="POST" class="">#}
+    {#                {% csrf_token %}#}
+    {#                <div class="form-row">#}
+    {#                    {{ form.non_field_errors }}#}
+    {##}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.name.errors }}#}
+    {#                        <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"#}
+    {#                               data-rule="minlen:4" data-msg="Please enter at least 4 chars">#}
+    {##}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.email.errors }}#}
+    {#                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"#}
+    {#                               data-rule="email" data-msg="Please enter a valid email">#}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.phone.errors }}#}
+    {#                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone"#}
+    {#                               data-rule="minlen:4" data-msg="Please enter at least 4 chars">#}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.date.errors }}#}
+    {#                        <input type="date" name="date" class="form-control" id="date" placeholder="Date"#}
+    {#                               data-rule="minlen:4" data-msg="Please enter at least 4 chars">#}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.time.errors }}#}
+    {#                        <input type="time" class="form-control" name="time" required id="time" placeholder="Time"#}
+    {#                        >#}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                    <div class="col-lg-4 col-md-6 form-group">#}
+    {#                        {{ form.people.errors }}#}
+    {#                        <input type="number" class="form-control" name="people" id="people" placeholder="# of people"#}
+    {#                               data-rule="minlen:1" data-msg="Please enter at least 1 chars">#}
+    {#                        <div class="validate"></div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <div class="form-group">#}
+    {#                    {{ form.message.errors }}#}
+    {#                    <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>#}
+    {#                    <div class="validate"></div>#}
+    {#                </div>#}
+    {#                <div class="text-center">#}
+    {#                    <button class="btn btn-light" type="submit">Book</button>#}
+    {#                </div>#}
+    {#            </form>#}
+    {##}
+    {#        </div>#}
+    {#    </section><!-- End Book A Event Section -->#}
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Contact</h2>
+                <p>Contact Us</p>
+            </div>
+        </div>
+
+        <div data-aos="fade-up">
+            <iframe style="border:0; width: 100%; height: 350px;"
+                    src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d29177.822568320174!2d90.2143639!3d23.9169855!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1615817472603!5m2!1sen!2sbd"
+                    width="500" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="row mt-5">
+
+                <div class="col-lg-4">
+                    <div class="info">
+                        <div class="address">
+                            <i class="icofont-google-map"></i>
+                            <h4>Location:</h4>
+                            <p>{{ data.location }}</p>
+                        </div>
+
+                        <div class="open-hours">
+                            <i class="icofont-clock-time icofont-rotate-90"></i>
+                            <h4>Open Hours:</h4>
+                            <p>
+                                {{ data.active_hour }}
+                            </p>
+                        </div>
+
+                        <div class="email">
+                            <i class="icofont-envelope"></i>
+                            <h4>Email:</h4>
+                            <p>{{ data.email }}</p>
+                        </div>
+
+                        <div class="phone">
+                            <i class="icofont-phone"></i>
+                            <h4>Call:</h4>
+                            <p>+88 0{{ data.phone_number }}</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 mt-5 mt-lg-0">
+
+                    <form action="{% url 'contact_us' %}" method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                {{ message_us.name.errors }}
+                                <input required type="text" name="name" class="form-control" id="name"
+                                       placeholder="Your Name"
+                                       data-rule="minlen:4" data-msg="Please enter at least 4 chars"/>
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                {{ message_us.email.errors }}
+                                <input type="email" class="form-control" name="email" id="email"
+                                       placeholder="Your Email" data-rule="email"
+                                       data-msg="Please enter a valid email"/>
+                                <div class="validate"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ message_us.subject.errors }}
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
+                                   data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject"/>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="form-group">
+                            {{ message_us.message.errors }}
+                            <textarea class="form-control" name="message" rows="8" data-rule="required"
+                                      data-msg="Please write something for us" placeholder="Message"></textarea>
+                            <div class="validate"></div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit">Send Message</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-info">
+                        <h3>EBM</h3>
+                        <p>+88 0{{ data.phone_number }}</p>
+                        <p>{{ data.active_hour }}</p>
+                        <p>{{ data.location }}</p>
+                        <div class="social-links mt-3">
+                            <a href="{{ data.twitter }}" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="{{ data.facebook }}" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="{{ data.instagram }}" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="{{ data.google_plus }}" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="{{ data.linkedin }}" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#"> Wedding</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Birthday</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Anniversary</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Holud</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Custom Parties</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            <strong><span>ɛɮʍ</span></strong> &copy; <strong><span>2021</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+
+            Designed by Tania
+        </div>
+    </div>
+
+</footer><!-- End Footer -->
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+<script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+<script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+<!-- Template Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

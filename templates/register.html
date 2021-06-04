@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="{% load static %}
+<!doctype html>
+<html lang=" en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+</head>
+<body>
+<div style="background-image: url({{img.url}});background-size:cover;">
+    <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+        <h1 class="logo mr-auto"><a href="{% url 'index' %}">ɛɮʍ</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="{% url 'index' %}">Home</a></li>
+            </ul>
+        </nav><!-- .nav-menu -->
+
+    </div>
+</header><!-- End Header -->
+<div class="container justify-content-center d-flex vh-100 align-items-center align-content-center">
+    <div class="row w-75">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header font-weight-bold">
+                    Registration
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'register' %}" method="post">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="form-group">
+
+                            <label for="id_first_name">First name</label>
+                            <input id="id_first_name" type="text" name="first_name" class="form-control">
+                            {{ form.first_name.errors }}
+                        </div>
+                        <div class="form-group">
+
+                            <label for="id_last_name">last name</label>
+                            <input id="id_last_name" type="text" name="last_name" class="form-control">
+                            {{ form.last_name.errors }}
+                        </div>
+                        <div class="form-group">
+
+                            <label for="id_username">Username</label>
+                            <input id="id_username" type="text" name="username" class="form-control">
+                            {{ form.username.errors }}
+                        </div>
+                        <div class="form-group">
+
+                            <label for="id_email">Email</label>
+                            <input id="id_email" type="email" name="email" class="form-control">
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="form-group">
+
+                            <label for="id_password">Password</label>
+                            <input id="id_password" type="password" name="password" class="form-control">
+                            {{ form.password.errors }}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-light">
+                                <a href="{% url 'login' %}">Login</a>
+                            </button>
+                            <button class="btn btn-primary">Register now</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- ======= Header ======= -->
+
+
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
